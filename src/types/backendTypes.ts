@@ -5,7 +5,7 @@ export type userType = {
 }
 
 export type cechaType = "Ciało" | "Umysł" | "Urok";
-export type typTalentType = "Podstawowy" | "Mistrzowski" | "Arcymistrzowski" | "PółBoski" | "Boski" | "Skill" | "Jednorazowy";
+export type typTalentType = "Podstawowy" | "Mistrzowski" | "Arcymistrzowski" | "PółBoski" | "Boski" | "Skill" | "Jednorazowy" | "Właściwość";
 
 export type talentType = {
     nazwa: string,
@@ -19,5 +19,10 @@ export type playerType = {
     cialo: number,
     umysl: number,
     urok: number,
-    talenty: talentType[]    
+    talenty: talentType[],
+    ID: number
 }
+
+export type Positive<T extends number> = `${T}` extends `-${string}`
+  ? never
+  : T;

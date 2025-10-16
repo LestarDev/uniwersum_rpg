@@ -1,16 +1,19 @@
 import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-import Main from './backend/Main';
+import LoginPage from './screens/LoginPage';
+import type { playerType } from './types/backendTypes';
+import { useSelector } from 'react-redux';
 
 function App() {
-  const [count, setCount] = useState("");
 
+  
+
+    const playerX = useSelector((state: any)=>state.player) as playerType;
 
   return (
     <>
-      {Main().lvlToDice(6, true)}
+      <LoginPage />
+      {playerX.imie}
     </>
   )
 }
