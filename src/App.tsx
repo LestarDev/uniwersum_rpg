@@ -1,19 +1,19 @@
-import { useEffect, useState } from 'react'
 import './App.css'
 import LoginPage from './screens/LoginPage';
+import MainPage from './screens/MainPage';
 import type { playerType } from './types/backendTypes';
 import { useSelector } from 'react-redux';
 
 function App() {
-
-  
-
-    const playerX = useSelector((state: any)=>state.player) as playerType;
+    const player = useSelector((state: any)=>state.player) as playerType;
 
   return (
     <>
-      <LoginPage />
-      {playerX.imie}
+      {
+        player.ID==-1 ?
+        <LoginPage /> :
+        <MainPage />
+      }
     </>
   )
 }

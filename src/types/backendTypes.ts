@@ -23,6 +23,14 @@ export type playerType = {
     ID: number
 }
 
+export type pagerType = "Login" | "Szukaj" | "List" | "Main" | "Plecak";
+
+export type idPagerType<T extends pagerType> = T extends "Login" ? 0 :
+T extends "Szukaj" ? 1 :
+T extends "List" ? 2 :
+T extends "Main" ? 3 :
+4
+
 export type Positive<T extends number> = `${T}` extends `-${string}`
   ? never
   : T;

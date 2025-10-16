@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import playerReducer from './playerSlice'
+import backendReducer from './backendSlice'
 
 
 const store = configureStore({
   reducer: {
-    player: playerReducer
+    player: playerReducer,
+    backend: backendReducer
   },
 })
 
