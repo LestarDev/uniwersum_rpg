@@ -34,3 +34,10 @@ T extends "Main" ? 3 :
 export type Positive<T extends number> = `${T}` extends `-${string}`
   ? never
   : T;
+
+export type urlType = `http${'s' | ''}://${string}` | `./${string}.${'png' | 'webp'}`;
+
+export type queryType<T extends number|JSON> = {
+    isError: boolean,
+    returnedValue: T
+}
