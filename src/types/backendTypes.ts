@@ -23,7 +23,7 @@ export type playerType = {
     ID: number
 }
 
-export type pagerType = "Login" | "Szukaj" | "List" | "Main" | "Plecak";
+export type pagerType = "Login" | "Szukaj" | "List" | "Main" | "Plecak" | "Error";
 
 export type idPagerType<T extends pagerType> = T extends "Login" ? 0 :
 T extends "Szukaj" ? 1 :

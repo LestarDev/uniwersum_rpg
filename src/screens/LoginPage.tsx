@@ -1,8 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { setID, setImie } from "../backend/playerSlice";
-import { useRef } from "react";
-import { changePager, getError } from "../backend/backendSlice";
-import useSql from "../backend/useSql";
+import { useRef, useState } from "react";
+import { changePager } from "../backend/backendSlice";
+import type { queryType } from "../types/backendTypes";
+import { mainLink } from "../backend/config";
+import useBackend from "../backend/useBackend";
 
 const LoginPage = () => {
 
@@ -11,33 +13,42 @@ const LoginPage = () => {
 
 const dispatch = useDispatch();
 
+const backend = useBackend();
+
     const refLOGIN = useRef<HTMLInputElement>(null);
     const refPASSWORD = useRef<HTMLInputElement>(null);
-
-    const sql = useSql();
 
     return <div>
         <label htmlFor="loginFORM"><input type="text" id="loginFORM" ref={refLOGIN} /></label>
         <label htmlFor="passwordFORM"><input type="password" id="passwordFORM" ref={refPASSWORD} /></label>
-        <button onClick={()=>{
+        <button onClick={async ()=>{
 
             const login = refLOGIN.current!.value;
             const password = refPASSWORD.current!.value;
 
-            // if(login=="Akari" && password=="11037"){
-            //     dispatch(setID(2))
-            //     dispatch(changePager("Main"));
-            // }
+            if(!login) backend.throwError(201);
+            if(!password) backend.throwError(201);
 
-            const dataID = sql.getID(login, password);
+            fetch(mainLink+`getID.php?login=${login}&password=${password}`).then(v=>v.text()).then((data:string)=>{
+                console.log(data);
+                const [isError, stringData] = data.split(' ');
+                const numberData = Number(stringData);
+                if(isError=="error"){
+                    backend.throwError(numberData);
+                    return;
+                }
+                if(isError!="connected"){
+                    backend.throwError(501);
+                    return;
+                }
+                dispatch(setID(numberData));
+                dispatch(changePager("Main"));
+            }).catch(()=>{
+                backend.throwError(501);
+            })
 
-            if(dataID.isError){
-                window.alert(getError(dataID.returnedValue));
-                return;
-            }
-
-            dispatch(setID(dataID.returnedValue))
-            dispatch(changePager("Main"));
+            // dispatch(setID(dataID.returnedValue))
+            // dispatch(changePager("Main"));
 
 
         dispatch(setImie("test2"));
