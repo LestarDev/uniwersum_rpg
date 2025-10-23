@@ -5,7 +5,7 @@ export type userType = {
 }
 
 export type cechaType = "Ciało" | "Umysł" | "Urok";
-export type typTalentType = "Podstawowy" | "Mistrzowski" | "Arcymistrzowski" | "PółBoski" | "Boski" | "Skill" | "Jednorazowy" | "Właściwość";
+export type typTalentType = "Podstawowy" | "Mistrzowski" | "Arcymistrzowski" | "PółBoski" | "Boski" | "Skill" | "Jednorazowy" | "Właściwość" | "Rasa";
 
 export type talentType = {
     nazwa: string,

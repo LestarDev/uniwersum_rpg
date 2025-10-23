@@ -1,13 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { RootState } from './store'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import type { pagerType, urlType } from '../types/backendTypes';
+import type { pagerType, talentType, urlType } from '../types/backendTypes';
 
 // Define a type for the slice state
 export interface backendInterface {
   pager: pagerType,
   grafikaURL: string,
-  errorMSG: string
+  errorMSG: string,
+  rasa: string,
+  dataRasa: talentType
 }
 
 export const diceColumn = ["k3", "k4", "k6", "k8", "k10", "k12", "k20", "k20+k3", "k20+k4"];
@@ -31,7 +33,14 @@ export const getError = (error: number): string => {
 const initialState: backendInterface = {
   pager: "Login",
   grafikaURL: "",
-  errorMSG: ""
+  errorMSG: "",
+  rasa: "",
+  dataRasa: {
+    cecha: 'Ciało',
+    nazwa: "",
+    typ: "Właściwość",
+    value: -1
+  }
 }
 
 export const backendSlice = createSlice({

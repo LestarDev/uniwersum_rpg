@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setID, setImie } from "../backend/playerSlice";
+import { setID, setImie, setTalenty } from "../backend/playerSlice";
 import { useRef, useState } from "react";
 import { changePager } from "../backend/backendSlice";
-import type { queryType } from "../types/backendTypes";
+import type { queryType, talentType } from "../types/backendTypes";
 import { mainLink } from "../backend/config";
 import useBackend from "../backend/useBackend";
 
@@ -42,7 +42,20 @@ const backend = useBackend();
                     return;
                 }
                 dispatch(setID(numberData));
-                dispatch(changePager("Main"));
+                fetch(mainLink+`getRase.php?ID=${numberData}`).then(textTalents=>textTalents.text()).then((data: string)=>{
+                    const namesOfTalents = data.split('|');
+                    const raceTalents: talentType[] = [];
+                    namesOfTalents.forEach(talent=>{
+                        raceTalents.push({
+                            cecha: "Ciało",
+                            nazwa: talent,
+                            typ: "Skill",
+                            value: 0
+                        })
+                    })
+                    dispatch(setTalenty(raceTalents));
+                    dispatch(changePager("Main"));
+                })
             }).catch(()=>{
                 backend.throwError(501);
             })

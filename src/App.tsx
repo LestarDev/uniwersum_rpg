@@ -3,7 +3,6 @@ import type { backendInterface } from './backend/backendSlice';
 import ErrorPage from './screens/ErrorPage';
 import LoginPage from './screens/LoginPage';
 import MainPage from './screens/MainPage';
-import type { playerType } from './types/backendTypes';
 import { useSelector } from 'react-redux';
 
 function App() {
