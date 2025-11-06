@@ -11,7 +11,7 @@ function App() {
 
   return (
     <>
-    {backend.pager}
+    {/* {backend.pager} */}
       {
         backend.pager=="Login" ?
         <LoginPage /> :

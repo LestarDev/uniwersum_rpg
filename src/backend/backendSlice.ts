@@ -56,13 +56,26 @@ export const backendSlice = createSlice({
     },
     setErrorMSG: (state: backendInterface, action: PayloadAction<number>)=>{
       state.errorMSG=action.payload.toString()+" | "+getError(action.payload);
+    },
+    setRasa: (state: backendInterface, action: PayloadAction<{
+      rasa: string,
+      rasaNazwa: string,
+      value: number
+    }>)=>{
+      state.rasa=action.payload.rasa;
+      state.dataRasa={
+        cecha: "Ciało",
+        nazwa: action.payload.rasaNazwa,
+        typ: "Rasa",
+        value: action.payload.value
+      }
     }
   },
 })
 
 
 
-export const { changePager, setGrafikaURL, setErrorMSG } = backendSlice.actions
+export const { changePager, setGrafikaURL, setErrorMSG, setRasa } = backendSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const backendRedux = (state: RootState) => state.backend

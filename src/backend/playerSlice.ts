@@ -14,7 +14,13 @@ const initialState: playerType = {
   umysl: 0,
   urok: 0,
   imie: "Error",
-  talenty: []
+  talenty: [],
+  addCialo: 0,
+  addUmysL: 0,
+  addUrok: 0,
+  exp: 0,
+  lvl: -1,
+  gold: 0
 }
 
 export const playerSlice = createSlice({
@@ -40,12 +46,27 @@ export const playerSlice = createSlice({
     setTalenty: (state: playerType, action: PayloadAction<talentType[]>) => {
         state.talenty=action.payload
     },
+    setLvl: (state: playerType, action: PayloadAction<number>) => {
+      state.lvl=action.payload
+    },
+    setExp: (state: playerType, action: PayloadAction<number>) => {
+      state.exp=action.payload
+    },
+    setAddCialo: (state: playerType, action: PayloadAction<number>) => {
+      state.addCialo=action.payload
+    },
+    setAddUmysl: (state: playerType, action: PayloadAction<number>) => {
+      state.addUmysL=action.payload
+    },
+    setAddUrok: (state: playerType, action: PayloadAction<number>) => {
+      state.addUrok=action.payload
+    },
   },
 })
 
 export const diceColumn = ["k3", "k4", "k6", "k8", "k10", "k12", "k20", "k20+k3", "k20+k4"];
 
-export const { setCialo, setID, setImie, setTalenty, setUmysl, setUrok } = playerSlice.actions
+export const { setCialo, setID, setImie, setTalenty, setUmysl, setUrok, setLvl, setExp, setAddCialo, setAddUmysl, setAddUrok } = playerSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const playerRedux = (state: RootState) => state.player

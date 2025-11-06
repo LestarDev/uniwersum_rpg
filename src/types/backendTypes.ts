@@ -20,7 +20,13 @@ export type playerType = {
     umysl: number,
     urok: number,
     talenty: talentType[],
-    ID: number
+    ID: number,
+    lvl: number,
+    exp: number,
+    addCialo: number,
+    addUmysL: number,
+    addUrok: number,
+    gold: number
 }
 
 export type pagerType = "Login" | "Szukaj" | "List" | "Main" | "Plecak" | "Error";

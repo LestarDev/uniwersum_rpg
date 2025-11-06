@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setID, setImie, setTalenty } from "../backend/playerSlice";
+import { setAddCialo, setAddUmysl, setAddUrok, setCialo, setExp, setID, setImie, setLvl, setTalenty, setUmysl, setUrok } from "../backend/playerSlice";
 import { useRef, useState } from "react";
-import { changePager } from "../backend/backendSlice";
-import type { queryType, talentType } from "../types/backendTypes";
+import { changePager, setGrafikaURL, setRasa } from "../backend/backendSlice";
+import type { queryType, talentType, urlType } from "../types/backendTypes";
 import { mainLink } from "../backend/config";
 import useBackend from "../backend/useBackend";
 
@@ -42,20 +42,42 @@ const backend = useBackend();
                     return;
                 }
                 dispatch(setID(numberData));
-                fetch(mainLink+`getRase.php?ID=${numberData}`).then(textTalents=>textTalents.text()).then((data: string)=>{
-                    const namesOfTalents = data.split('|');
-                    const raceTalents: talentType[] = [];
-                    namesOfTalents.forEach(talent=>{
-                        raceTalents.push({
-                            cecha: "Ciało",
-                            nazwa: talent,
-                            typ: "Skill",
-                            value: 0
+                fetch(mainLink+`getPlayerData.php?ID=${numberData}`).then(textData=>textData.text()).then((dataPlayer: string)=>{
+                    console.log(dataPlayer);
+                    const playerData = dataPlayer.split('|');
+                    const lvl = Number(playerData[6])
+                    dispatch(setCialo(Number(playerData[0])))
+                    dispatch(setUmysl(Number(playerData[1])))
+                    dispatch(setUrok(Number(playerData[2])))
+                    dispatch(setAddCialo(Number(playerData[3])))
+                    dispatch(setAddUmysl(Number(playerData[4])))
+                    dispatch(setAddUrok(Number(playerData[5])))
+                    dispatch(setLvl(lvl))
+                    dispatch(setExp(Number(playerData[7])))
+                    dispatch(setGrafikaURL(playerData[8] as urlType))
+                    dispatch(setRasa({
+                        rasa: playerData[9],
+                        rasaNazwa: playerData[10],
+                        value: (lvl>=25 ? 6 : Math.floor(lvl/5)+1)
+                    }))
+                    dispatch(setImie(playerData[11]))
+                    fetch(mainLink+`getRaseTalents.php?ID=${numberData}`).then(textTalents=>textTalents.text()).then((dataRaseTalents: string)=>{
+                        console.log(dataRaseTalents);
+                        const namesOfTalents = dataRaseTalents.split('|');
+                        const raceTalents: talentType[] = [];
+                        namesOfTalents.forEach(talent=>{
+                            raceTalents.push({
+                                cecha: "Ciało",
+                                nazwa: talent,
+                                typ: "Skill",
+                                value: 0
+                            })
                         })
+                        dispatch(setTalenty(raceTalents));
+                        dispatch(changePager("Main"));
                     })
-                    dispatch(setTalenty(raceTalents));
-                    dispatch(changePager("Main"));
                 })
+                
             }).catch(()=>{
                 backend.throwError(501);
             })
@@ -64,7 +86,6 @@ const backend = useBackend();
             // dispatch(changePager("Main"));
 
 
-        dispatch(setImie("test2"));
 
         }}>click</button>
     </div>
